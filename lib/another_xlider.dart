@@ -1746,37 +1746,37 @@ class FlutterSliderState extends State<FlutterSlider> with TickerProviderStateMi
           opacity: 0,
           child: Listener(
             onPointerUp: (_) {
-              __dragging = false;
-              if (widget.selectByTap && !__dragging) {
-                tappedPositionWithPadding = _distance();
-                if (_distanceFromLeftHandler! < _distanceFromRightHandler!) {
-                  if (!widget.rangeSlider) {
-                    _rightHandlerMove(_, tappedPositionWithPadding: tappedPositionWithPadding, selectedByTap: true);
-                  } else {
-                    _leftHandlerMove(_, tappedPositionWithPadding: tappedPositionWithPadding, selectedByTap: true);
-                  }
-                } else {
-                  _rightHandlerMove(_, tappedPositionWithPadding: tappedPositionWithPadding, selectedByTap: true);
-                }
-              } else {
-                if (_slidingByActiveTrackBar) {
-                  _callbacks('onDragCompleted', 0);
-                }
-                if (_leftTapAndSlide) {
-                  _callbacks('onDragCompleted', 0);
-                }
-                if (_rightTapAndSlide) {
-                  _callbacks('onDragCompleted', 1);
-                }
-              }
-
-              _hideTooltips();
-
-              _stopHandlerAnimation(animation: _leftHandlerScaleAnimation, controller: _leftHandlerScaleAnimationController);
-              _stopHandlerAnimation(
-                  animation: _rightHandlerScaleAnimation, controller: _rightHandlerScaleAnimationController);
-
-              setState(() {});
+              // __dragging = false;
+              // if (widget.selectByTap && !__dragging) {
+              //   tappedPositionWithPadding = _distance();
+              //   if (_distanceFromLeftHandler! < _distanceFromRightHandler!) {
+              //     if (!widget.rangeSlider) {
+              //       _rightHandlerMove(_, tappedPositionWithPadding: tappedPositionWithPadding, selectedByTap: true);
+              //     } else {
+              //       _leftHandlerMove(_, tappedPositionWithPadding: tappedPositionWithPadding, selectedByTap: true);
+              //     }
+              //   } else {
+              //     _rightHandlerMove(_, tappedPositionWithPadding: tappedPositionWithPadding, selectedByTap: true);
+              //   }
+              // } else {
+              //   if (_slidingByActiveTrackBar) {
+              //     _callbacks('onDragCompleted', 0);
+              //   }
+              //   if (_leftTapAndSlide) {
+              //     _callbacks('onDragCompleted', 0);
+              //   }
+              //   if (_rightTapAndSlide) {
+              //     _callbacks('onDragCompleted', 1);
+              //   }
+              // }
+              //
+              // _hideTooltips();
+              //
+              // _stopHandlerAnimation(animation: _leftHandlerScaleAnimation, controller: _leftHandlerScaleAnimationController);
+              // _stopHandlerAnimation(
+              //     animation: _rightHandlerScaleAnimation, controller: _rightHandlerScaleAnimationController);
+              //
+              // setState(() {});
             },
             onPointerMove: (_) {
               __dragging = true;
@@ -1814,87 +1814,83 @@ class FlutterSliderState extends State<FlutterSlider> with TickerProviderStateMi
               }
             },
             onPointerDown: (_) {
-              _leftTapAndSlide = false;
-              _rightTapAndSlide = false;
-              _slidingByActiveTrackBar = false;
-              __dragging = false;
-              _trackBarSlideOnDragStartedCalled = false;
-
-              double leftHandlerLastPosition, rightHandlerLastPosition;
-              if (widget.axis == Axis.horizontal) {
-                double lX = _leftHandlerXPosition! + _handlersPadding + _touchSize! + _containerLeft;
-                double rX = _rightHandlerXPosition! + _handlersPadding + _touchSize! + _containerLeft;
-
-                _distanceFromRightHandler = (rX - _.position.dx);
-                _distanceFromLeftHandler = (lX - _.position.dx);
-
-                leftHandlerLastPosition = lX;
-                rightHandlerLastPosition = rX;
-              } else {
-                double lY = _leftHandlerYPosition! + _handlersPadding + _touchSize! + _containerTop;
-                double rY = _rightHandlerYPosition! + _handlersPadding + _touchSize! + _containerTop;
-
-                _distanceFromLeftHandler = (lY - _.position.dy);
-                _distanceFromRightHandler = (rY - _.position.dy);
-
-                leftHandlerLastPosition = lY;
-                rightHandlerLastPosition = rY;
-              }
-
-              if (widget.rangeSlider &&
-                  widget.trackBar.activeTrackBarDraggable &&
-                  _ignoreSteps.isEmpty &&
-                  _distanceFromRightHandler! > 0 &&
-                  _distanceFromLeftHandler! < 0) {
-                _slidingByActiveTrackBar = true;
-              } else {
-                double thumbPosition = (widget.axis == Axis.vertical) ? _.position.dy : _.position.dx;
-                if (_distanceFromLeftHandler!.abs() < _distanceFromRightHandler!.abs() ||
-                    (_distanceFromLeftHandler == _distanceFromRightHandler && thumbPosition < leftHandlerLastPosition)) {
-                  _leftTapAndSlide = true;
-                }
-                if (_distanceFromRightHandler!.abs() < _distanceFromLeftHandler!.abs() ||
-                    (_distanceFromLeftHandler == _distanceFromRightHandler && thumbPosition < rightHandlerLastPosition)) {
-                  _rightTapAndSlide = true;
-                }
-              }
-
-              // if drag is within active area
-              if (_distanceFromRightHandler! > 0 && _distanceFromLeftHandler! < 0) {
-                if (widget.axis == Axis.horizontal) {
-                  xDragTmp = 0;
-                  __lockedHandlersDragOffset = (_leftHandlerXPosition! + _containerLeft - _.position.dx).abs();
-                } else {
-                  yDragTmp = 0;
-                  __lockedHandlersDragOffset = (_leftHandlerYPosition! + _containerTop - _.position.dy).abs();
-                }
-              }
-//              }
-
-              if (_ignoreSteps.isEmpty) {
-                if ((widget.lockHandlers || __lockedHandlersDragOffset > 0) &&
-                    !_tooltipData.disabled! &&
-                    _tooltipData.alwaysShowTooltip == false) {
-                  _leftTooltipOpacity = 1;
-                  _leftTooltipAnimationController.forward();
-                  _rightTooltipOpacity = 1;
-                  _rightTooltipAnimationController.forward();
-                }
-
-                if ((widget.lockHandlers || __lockedHandlersDragOffset > 0)) {
-                  _leftHandlerScaleAnimationController!.forward();
-                  _rightHandlerScaleAnimationController!.forward();
-                }
-              }
-
-              setState(() {});
+//               _leftTapAndSlide = false;
+//               _rightTapAndSlide = false;
+//               _slidingByActiveTrackBar = false;
+//               __dragging = false;
+//               _trackBarSlideOnDragStartedCalled = false;
+//
+//               double leftHandlerLastPosition, rightHandlerLastPosition;
+//               if (widget.axis == Axis.horizontal) {
+//                 double lX = _leftHandlerXPosition! + _handlersPadding + _touchSize! + _containerLeft;
+//                 double rX = _rightHandlerXPosition! + _handlersPadding + _touchSize! + _containerLeft;
+//
+//                 _distanceFromRightHandler = (rX - _.position.dx);
+//                 _distanceFromLeftHandler = (lX - _.position.dx);
+//
+//                 leftHandlerLastPosition = lX;
+//                 rightHandlerLastPosition = rX;
+//               } else {
+//                 double lY = _leftHandlerYPosition! + _handlersPadding + _touchSize! + _containerTop;
+//                 double rY = _rightHandlerYPosition! + _handlersPadding + _touchSize! + _containerTop;
+//
+//                 _distanceFromLeftHandler = (lY - _.position.dy);
+//                 _distanceFromRightHandler = (rY - _.position.dy);
+//
+//                 leftHandlerLastPosition = lY;
+//                 rightHandlerLastPosition = rY;
+//               }
+//
+//               if (widget.rangeSlider &&
+//                   widget.trackBar.activeTrackBarDraggable &&
+//                   _ignoreSteps.isEmpty &&
+//                   _distanceFromRightHandler! > 0 &&
+//                   _distanceFromLeftHandler! < 0) {
+//                 _slidingByActiveTrackBar = true;
+//               } else {
+//                 double thumbPosition = (widget.axis == Axis.vertical) ? _.position.dy : _.position.dx;
+//                 if (_distanceFromLeftHandler!.abs() < _distanceFromRightHandler!.abs() ||
+//                     (_distanceFromLeftHandler == _distanceFromRightHandler && thumbPosition < leftHandlerLastPosition)) {
+//                   _leftTapAndSlide = true;
+//                 }
+//                 if (_distanceFromRightHandler!.abs() < _distanceFromLeftHandler!.abs() ||
+//                     (_distanceFromLeftHandler == _distanceFromRightHandler && thumbPosition < rightHandlerLastPosition)) {
+//                   _rightTapAndSlide = true;
+//                 }
+//               }
+//
+//               // if drag is within active area
+//               if (_distanceFromRightHandler! > 0 && _distanceFromLeftHandler! < 0) {
+//                 if (widget.axis == Axis.horizontal) {
+//                   xDragTmp = 0;
+//                   __lockedHandlersDragOffset = (_leftHandlerXPosition! + _containerLeft - _.position.dx).abs();
+//                 } else {
+//                   yDragTmp = 0;
+//                   __lockedHandlersDragOffset = (_leftHandlerYPosition! + _containerTop - _.position.dy).abs();
+//                 }
+//               }
+// //              }
+//
+//               if (_ignoreSteps.isEmpty) {
+//                 if ((widget.lockHandlers || __lockedHandlersDragOffset > 0) &&
+//                     !_tooltipData.disabled! &&
+//                     _tooltipData.alwaysShowTooltip == false) {
+//                   _leftTooltipOpacity = 1;
+//                   _leftTooltipAnimationController.forward();
+//                   _rightTooltipOpacity = 1;
+//                   _rightTooltipAnimationController.forward();
+//                 }
+//
+//                 if ((widget.lockHandlers || __lockedHandlersDragOffset > 0)) {
+//                   _leftHandlerScaleAnimationController!.forward();
+//                   _rightHandlerScaleAnimationController!.forward();
+//                 }
+//               }
+//
+//               setState(() {});
             },
-            child: Draggable(
-              axis: widget.axis,
-              feedback: Container(),
-              child: Container(
-                color: Colors.transparent,
-              ),
+            child: Container(
+              color: Colors.transparent,
             ),
           ),
         ),
